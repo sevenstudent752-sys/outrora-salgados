@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empresa - Outrora Salgados</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Fontes do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+
+    <style>
+        /* Variáveis Globais de Suporte para Modais */
+        :root {
+            --bg-card: #202644;
+            --blue-accent: #7fa8b8;
+            --cream-white: #fbf0ea;
+            --wine-red: #8b263e;
+            --pink-soft: #f7d8ce;
+            --main-dark: #171a3d;
+        }
+
+        * { padding: 0;  margin: 0;  box-sizing: border-box;  }
+        
+        ::-webkit-scrollbar { width: 10px; } 
+        ::-webkit-scrollbar-track { background: #171a3d; }
+        ::-webkit-scrollbar-thumb { background: #adc2c9;  border-radius: 5px; }
+        ::selection { background: #583e29;  color: #fffbc9; }
+
+        body {
+            background-color: #171a3d;
+            color: #fdf6ec;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        nav {
+            position: fixed;
+            height: 70px;
+            width: 100%;
+            border-bottom: 5px solid #1f9639;
+            display: flex;
+            padding: 0 15px;
+            backdrop-filter: blur(100px);
+            -webkit-backdrop-filter: blur(100px);
+            z-index: 1000;
+            justify-content: space-between;
+            align-items: center;
+            top: 0;
+            left: 0;
+        } 
+        
+        .menu {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .menu-checkbox { 
+            display: none; 
+        } 
+        
+        .menu-icon {
+            width: 30px;
+            cursor: pointer;
+            height: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative; 
+            z-index: 1002;
+        } 
+        
+        .menu-icon span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out; 
+        } 
+        
+        /* Animação do ícone de hambúrguer para o "X" */
+        .menu-checkbox:checked + .menu-icon span:nth-child(1) { transform: translateY(9.5px) rotate(45deg); } 
+        .menu-checkbox:checked + .menu-icon span:nth-child(2) { opacity: 0; } 
+        .menu-checkbox:checked + .menu-icon span:nth-child(3) { transform: translateY(-9.5px) rotate(-45deg); }
+
+        /* Caixa do menu suspenso ajustada para mobile */
+        .para-menu {
+            background-color: #a3dcef;
+            width: 180px;
+            position: absolute;
+            right: -10px;
+            top: 55px;
+            display: none;
+            padding: 15px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.4);
+            border-radius: 0 0 8px 8px;
+            z-index: 1001;
+        } 
+        
+        .para-menu a {
+            display: block;
+            margin: 10px 0;
+            text-decoration: none;
+            color: #171a3d; 
+            font-weight: bold;
+        }
+
+        /* Exibe o menu quando o input estiver marcado */
+        #menu-toggle:checked ~ .para-menu { 
+            display: block; 
+        }
+
+        h1, h2 {
+            font-family: "UnifrakturMaguntia", cursive;
+            font-weight: 400;
+            padding: 0px;
+            margin: 0px;
+            font-size: 1.5rem;
+            font-style: normal;
+        } 
+        
+        h1, h2, p {
+            text-shadow: 
+            -1px -1px 0 #000,  
+            1px -1px 0 #000,
+            -1px  1px 0 #000,
+            1px  1px 0 #000;
+        } 
+        
+        p { font-family: "Cinzel", serif; }
+
+        .titulo1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1.1;
+        }
+        
+        .titulo2 {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            line-height: 1;
+        }
+        
+        .subtitulo {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-family: "Cinzel", serif;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Ajuste responsivo da ilustração da igreja */
+        #i {
+            position: absolute;
+            top: 25%;
+            left: 5%;
+            background-image: url('assets/igreja.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 40%;
+            height: 70%;
+            z-index: 1; 
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        .menu-checkbox { display: none; } 
+        
+        .menu-icon {
+            width: 30px;
+            cursor: pointer;
+            height: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative; 
+        } 
+        
+        .menu-icon span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out; 
+        } 
+        
+        .menu-checkbox:checked + .menu-icon span:nth-child(1) { transform: translateY(9.5px) rotate(45deg); } 
+        .menu-checkbox:checked + .menu-icon span:nth-child(2) { opacity: 0; } 
+        .menu-checkbox:checked + .menu-icon span:nth-child(3) { transform: translateY(-9.5px) rotate(-45deg); }
+
+        #back {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/fundo.png');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+
+        article {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 0 15px;
+            width: 100%;
+        }
+
+        footer {
+            border-top: 5px solid #171a3d;
+            color: white;
+            text-align: center;
+            padding: 3%;
+        }
+        
+        button { cursor: pointer;}
+
+        .butoes {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 3%;
+            flex-wrap: wrap;
+            padding: 0 10px;
+        } 
+        
+        .butoes button {
+            border: 1px solid #000;
+            background-color: #fffbc9;
+            padding: 10px 20px;
+            border-radius: 5px; 
+        } 
+        
+        .butoes p {
+            text-shadow: none; 
+            color: #000;
+        }
+
+        /* Container dos cards-produtos */
+        #menu-grid {
+            display: flex;
+            flex-wrap: wrap; 
+            gap: 1.5rem;       
+            width: 90%;
+            max-width: 1200px;
+            box-sizing: border-box;
+            justify-content: center;
+            margin-bottom: 50px;
+        } 
+        
+        .produtos-cards {
+            background-color: #583e29d5;
+            border: 2px solid #adc2c9;
+            border-radius: 8px;
+            padding: 20px;
+            flex: 1 1 260px;   
+            max-width: 320px;  
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: #fdf6ec;
+        } 
+        
+        .produtos-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            color: #fdf6ec;
+        } 
+        
+        .product-title {
+            font-family: "Cinzel", serif;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        } 
+        
+        .product-desc {
+            font-size: 0.9rem;
+            color: #fdf6ec;
+            margin-bottom: 15px;
+            text-shadow: none;
+        } 
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            border-top: 1px solid #fdf6ec;
+            padding-top: 10px;
+        } 
+        
+        .product-price {
+            font-weight: bold;
+            color: #fdf6ec;
+            font-size: 1.1rem;
+            text-shadow: none;
+        } 
+        
+        .btn-inspect {
+            background-color: #fdf6ec;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            color: #171a3d;
+        } 
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(17, 22, 45, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 15px;
+        } 
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        } 
+        
+        .modal-content {
+            background: var(--bg-card);
+            border: 2px solid var(--blue-accent);
+            border-radius: 16px;
+            padding: 30px;
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        } 
+        
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--cream-white);
+            font-size: 1.8rem;
+            cursor: pointer;
+        } 
+        
+        .modal-close:hover { color: var(--wine-red); } 
+        
+        .modal-icon-box {
+            font-size: 3rem;
+            color: var(--blue-accent);
+            margin-bottom: 15px;
+        } 
+        
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .icon-calendar-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(127, 168, 184, 0.3);
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        /* --- Seção quem-somos --- */
+        .about-container {
+            max-width: 1150px;
+            margin: 60px auto;
+            padding: 0 20px;
+        } 
+        
+        .about-card-box {
+            background: rgba(26, 32, 60, 0.7);
+            border: 1px solid rgba(127, 168, 184, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        } 
+        
+        .about-title {
+            font-family: "UnifrakturMaguntia", cursive;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            text-align: center;
+            color: #fbf0ea;
+            margin-bottom: 40px; 
+        } 
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        @media (min-width: 992px) {
+            .about-grid { grid-template-columns: 5fr 7fr; }
+        }
+
+        .about-photo-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        } 
+        
+        .about-photo-frame {
+            width: 100%;
+            height: 300px;
+            background: #11162d;
+            border: 2px dashed #7fa8b8;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        } 
+        
+        .about-photo-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(139, 38, 62, 0.2), transparent);
+            pointer-events: none;
+        } 
+        
+        .about-photo-frame i.main-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #f7d8ce;
+            transition: transform 0.3s ease;
+        } 
+        
+        .about-photo-frame:hover i.main-icon { transform: scale(1.1); } 
+        
+        .inspirations-container {
+            border-top: 1px solid rgba(127, 168, 184, 0.2);
+            padding-top: 20px;
+        } 
+        
+        .inspirations-container .insp-cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 576px) {
+            .insp-cards-grid { grid-template-columns: repeat(2, 1fr); }
+        } 
+        
+        .insp-card-item {
+            background: rgba(17, 22, 45, 0.8);
+            border: 1px solid rgba(127, 168, 184, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+        } 
+        
+        .insp-card-item span {
+            display: block;
+            color: #f7d8ce;
+            font-weight: bold;
+            font-family: "Cinzel", serif;
+            font-size: 0.85rem;
+            margin-bottom: 5px; 
+        } 
+        
+        .insp-card-item p {
+            font-size: 0.8rem;
+            color: #7fa8b8;
+            margin: 0; 
+        }      
+
+        aside.scroll-text-marquee { 
+            position: relative;
+            height: 120px;
+            width: 100%;
+            padding: 5px;
+            border-bottom: 5px solid #6d1b2b;
+            border-top: 5px solid #6d1b2b;
+            margin-bottom: 10%;
+            display: flex;
+            align-items: center;      
+            overflow: hidden; 
+            border-radius: 10px;
+            box-shadow: 100px 100px 1000px inset #fffbc9a9;     
+        }
+        
+        aside.scroll-text-marquee h2 {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            text-align: center;
+            white-space: nowrap;   
+            will-change: transform;
+            animation: rolarTexto 40s linear infinite; 
+            letter-spacing: 1px;
+        }
+
+        @keyframes rolarTexto {
+            0% { transform: translate3d(100%, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* Ajustes específicos para smartphones menores */
+        @media (max-width: 768px) {
+            #i {
+                width: 70%;
+                height: 40%;
+                left: 20%;
+                top: 10%;
+                opacity: 0.9;
+            }
+            .parte2 { font-size: 2rem !important; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <nav>
+        <div class="logo" style="display: flex; align-items: center;" >
+            <img src="assets/logo.ico" style="height: 40px; width: 40px; margin-right: 10px;" alt="Logo">
+            <h1>Outrora <br> Salgados</h1>
+        </div>
+        <div class="menu">
+            <a id="gcal-link" class="icon-calendar-btn" target="_blank" title="Adicionar 27/11/2026 ao Google Agenda">
+                <i class="fa-regular fa-bell"></i>
+            </a>
+            <div style="position: relative; margin-left: 15px;" title="Caminhos">
+                <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+                <label for="menu-toggle" class="menu-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+                <div class="para-menu">
+                    <a href="#inicio"><p>Início</p></a> 
+                    <a href="#produto"><p>Produtos</p></a> 
+                    <a href="#quem-somos"><p>Quem somos?</p></a>  
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main -->
+    <main id="inicio">
+        <div id="i"></div>
+        <header style="text-align: center; z-index: 2;">
+            <h2 class="titulo1 animar-scroll">SEJA BEM-</h2>
+            <h2 class="titulo2 animar-scroll">VINDO(A)!</h2>
+            <p class="subtitulo animar-scroll">Bem-vindo(a) à Outrora Salgados!</p>
+        </header>
+        <div id="back"></div>
+    </main>
+
+    <!-- Produtos -->
+    <article id="produto">
+        <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 20px;" class="parte2 animar-scroll">✦ Visualize nossos produtos! ✦</h2>
+        <div class="butoes">
+            <button onclick="filtroMenu('todos')"><p>Todos</p></button>
+            <button onclick="filtroMenu('salgados')"><p>Salgados</p></button>
+            <button onclick="filtroMenu('doces')"><p>Doces</p></button>
+            <button onclick="filtroMenu('bebidas')"><p>Bebidas</p></button>
+        </div>
+        <div id="menu-grid"></div>
+    </article>
+
+    <!-- Modal -->
+    <div id="product-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="fecharModal()">&times;</button>
+            <div class="modal-icon-box">
+                <i id="modal-icon" class="fa-solid fa-utensils"></i>
+            </div>
+            <h3 id="modal-title" style="font-family: 'UnifrakturMaguntia', cursive; font-size: 1.8rem;">Nome do Produto</h3>
+            <p id="modal-category" style="color: var(--blue-accent); font-size: 0.85rem; margin-bottom: 10px;"></p>
+            <p id="modal-desc" style="color: #cbd2e1; margin-bottom: 20px;"></p>
+            <div class="modal-footer">
+                <span id="modal-price" class="product-price">R$ 0,00</span>
+                <button onclick="fecharModal()" class="btn-inspect">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quem Somos -->
+    <section id="quem-somos" class="about-container">
+        <div class="about-card-box">
+            <h2 class="about-title animar-scroll">✦ Quem Somos? ✦</h2>
+            <div class="about-grid">
+                <div class="about-photo-wrapper">
+                    <div class="about-photo-frame">
+                        <i class="fa-solid fa-users-rays main-icon"></i>
+                        <h5 style="font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.1rem; color: #fbf0ea;">Equipe info 1</h5>
+                        <span style="font-size: 0.8rem; color: #7fa8b8; margin-top: 5px;">Desenvolvedores & Criadores do Projeto</span>
+                    </div>
+                </div>
+                <div class="about-text-content">
+                    <div>
+                        <h3 style="font-family: 'UnifrakturMaguntia', cursive; font-size: 2rem; color: #f7d8ce; margin-bottom: 15px;">Somos da Info 1 e esta é a nossa história...</h3>
+                        <p style="color: rgba(251, 240, 234, 0.8); line-height: 1.7; margin-bottom: 25px; text-shadow: none;">
+                            A <strong style="color: #f7d8ce;">Outrora Salgados</strong> tem missão de entregar produtos com qualidade e uma experiência que foge da realidade,com uma estética medieval meio fantasiosa com monstros que acreditavam na época , e algumas que foram incluídas durante o tempo.Esse tema engloba principalmente as pessoas que jogam "RPG", que de grande maioria tem essa vibe.
+                        </p>
+                    </div>
+                    <div class="inspirations-container">
+                        <h4 style="font-family: 'Cinzel', serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #fbf0ea; margin-bottom: 15px;">Nossas inspirações estão no: <a href="https://br.pinterest.com/annajuliadelimaoliveirajulia/empreendedorismo/" target="_blank" style="text-decoration: none; color: #adc2c9;"><p style="color: #adc2c9; font-family: 'Cinzel', serif; display: inline;" title="Ir para as inspirações.">Pinterest</p></a></h4>
+                        <div class="insp-cards-grid">
+                            <div class="insp-card-item">
+                                <span> Visão </span>
+                                <p>Vemos um futuro brilhante em que possamos expandir nossas ideias para diversos universos formando ambientes que fornecem alegria e conforto a todos. Experiência inesquecível, e seja lembranda positivamente aos anos futuros!</p>
+                            </div>
+                            <div class="insp-card-item">
+                                <span> Valores</span>
+                                <p>Na nossa empresa nos valorizamos a criatividade, honestidade e o compromisso com as nossas metas, principalmente a inovação constante que busca novas soluções e questiona padrões.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <aside class="scroll-text-marquee"><h2>"O segredo do sucesso não é criar um negócio para durar uma temporada, mas construir uma marca que se torne eterna na mente dos clientes."</h2></aside>
+    
+    <!-- Rodapé -->
+    <footer style="background-color: #adc2c9; color: #171a3d;">
+        <h6 style="font-family: 'UnifrakturMaguntia', cursive; font-weight: 400; font-size: 1.5rem;">Outrora Salgados</h6>
+        <h6 style="font-family: 'Cinzel', serif;">&copy; 2026 Outrora Salgados. Todos os direitos reservados.</h6>
+    </footer>
+
+    <!-- Scripts de Bibliotecas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+
+    <!-- Script Principal -->
+    <script>
+        const produtos = [
+            { id: 1, nome: "Salgados", categoria: "salgados", preco: 3.50, desc: "Sabores: frango com catupiry, frango com queijo, queijo, misto e carne", icon: "fa-bread-slice" },
+            { id: 2, nome: "Esfirra", categoria: "salgados", preco: 3.00, desc: "Sabores: calabresa, frango com catupiry, misto, bacon com chedda e mussarela", icon: "fa-bread-slice" },
+            { id: 5, nome: "Biscoitinhos", categoria: "doces", preco: 1.50, desc: "Você pode escolher ou doce, ou salgado", icon: "fa-cookie-bite" }, 
+            { id: 6, nome: "Cookies", categoria: "doces", preco: 2.00, desc: "Feito com massa e chocolate", icon: "fa-cookie" }, 
+            { id: 8, nome: "Guaraná", categoria: "bebidas", preco: 2.00, desc: "Pitchula", icon: "fa-bottle-water" }, 
+            { id: 9, nome: "Cajuína", categoria: "bebidas", preco: 2.00, desc: "Pitchula regional", icon: "fa-glass-water" },
+            { id: 10, nome: "Dindin", categoria: "doces", preco: 2.00, desc: "Não se sabe os sabores", icon: "fa-cookie-bite" }, 
+        ];
+
+        function renderMenu(items) {
+            const grid = document.getElementById("menu-grid");
+            if (!grid) return;
+            grid.innerHTML = "";
+
+            items.forEach(item => {
+                const card = document.createElement("div");
+                card.className = "produtos-cards";
+                card.innerHTML = `
+                    <div>
+                        <div class="produtos-nav">
+                            <div class="product-icon-box">
+                                <i class="fa-solid ${item.icon || 'fa-utensils'}"></i>
+                            </div>
+                        </div>
+                        <h3 class="product-title">${item.nome}</h3>
+                        <p class="product-desc">${item.desc}</p>
+                    </div>
+                    <div>
+                        <div class="product-footer">
+                            <span class="product-price">R$ ${item.preco.toFixed(2).replace('.', ',')}</span>
+                            <div class="product-actions">
+                                <button onclick="openModal(${item.id})" class="btn-inspect" title="Inspecionar">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(id) {
+            const produto = produtos.find(p => p.id === id);
+            if (!produto) return;
+
+            document.getElementById('modal-title').innerText = produto.nome;
+            document.getElementById('modal-category').innerText = `Categoria: ${produto.categoria.toUpperCase()}`;
+            document.getElementById('modal-desc').innerText = produto.desc;
+            document.getElementById('modal-price').innerText = `R$ ${produto.preco.toFixed(2).replace('.', ',')}`;
+            
+            const iconElement = document.getElementById('modal-icon');
+            iconElement.className = `fa-solid ${produto.icon || 'fa-utensils'}`;
+
+            document.getElementById('product-modal').classList.add('active');
+        }
+
+        function fecharModal() {
+            document.getElementById('product-modal').classList.remove('active');
+        }
+
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('product-modal');
+            if (event.target === modal) {
+                fecharModal();
+            }
+        });
+        
+        function filtroMenu(categoria) {
+            if (categoria === 'todos') {
+                renderMenu(produtos);
+            } else {
+                const filtered = produtos.filter(p => p.categoria === categoria);
+                renderMenu(filtered);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            renderMenu(produtos);
+            configurarLinkGoogleAgenda();
+
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof SplitType !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+
+                document.querySelectorAll('.animar-scroll').forEach(element => {
+                    const splitText = new SplitType(element, { types: 'chars' });
+
+                    gsap.from(splitText.chars, {
+                        opacity: 0,
+                        y: 20,                     
+                        duration: 0.6,       
+                        ease: 'power2.out',    
+                        stagger: 0.03,        
+                        scrollTrigger: {
+                            trigger: element,  
+                            start: 'top 95%', 
+                            toggleActions: 'play none none none' 
+                        }
+                    });
+                });
+            }
+        });
+
+        function configurarLinkGoogleAgenda() {
+            const titulo = encodeURIComponent("Feira do Empreendedorismo - Outrora Salgados");
+            const detalhes = encodeURIComponent("Venha prestigiar o stand da Outrora Salgados na Feira do Empreendedorismo!");
+            const local = encodeURIComponent("Feira do Empreendedorismo do César Campelo.");
+            const dataInicio = "20261127T120000Z";
+            const dataFim = "20261127T200000Z";
+            const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titulo}&dates=${dataInicio}/${dataFim}&details=${detalhes}&location=${local}`;
+            const gcalElement = document.getElementById('gcal-link');
+
+            if (gcalElement) {
+                gcalElement.href = gcalUrl;
+            }
+        }
+    </script>
+</body>
+</html>
